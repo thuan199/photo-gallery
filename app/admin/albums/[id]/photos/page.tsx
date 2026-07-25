@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import ThemeToggle from "@/app/components/ThemeToggle";
 import { createPhoto, deletePhoto } from "./actions";
+import { requireAdmin } from "@/lib/auth/admin";
 
 type Photo = {
   id: string;
@@ -43,14 +44,7 @@ export default async function AlbumPhotosPage({
   params,
   searchParams,
 }: AlbumPhotosPageProps) {
-  const supabase = await createClient();
-
-  const { data: authData, error: authError } =
-    await supabase.auth.getClaims();
-
-  if (authError || !authData?.claims) {
-    redirect("/admin/login");
-  }
+  const { supabase } = await requireAdmin();
 
   const { id: albumId } = await params;
   const query = await searchParams;

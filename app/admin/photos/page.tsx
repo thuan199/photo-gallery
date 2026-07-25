@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import ThemeToggle from "@/app/components/ThemeToggle";
+import { requireAdmin } from "@/lib/auth/admin";
 
 type AlbumPhotoSummary = {
   id: string;
@@ -16,14 +17,7 @@ type AlbumPhotoSummary = {
 };
 
 export default async function AdminPhotosPage() {
-  const supabase = await createClient();
-
-  const { data: authData, error: authError } =
-    await supabase.auth.getClaims();
-
-  if (authError || !authData?.claims) {
-    redirect("/admin/login");
-  }
+  const { supabase } = await requireAdmin();
 
   const { data, error } = await supabase
     .from("albums")

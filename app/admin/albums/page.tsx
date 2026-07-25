@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import ThemeToggle from "@/app/components/ThemeToggle";
 import { deleteAlbum } from "./actions";
+import { requireAdmin } from "@/lib/auth/admin";
 
 type Album = {
   id: string;
@@ -26,14 +27,7 @@ type AdminAlbumsPageProps = {
 export default async function AdminAlbumsPage({
   searchParams,
 }: AdminAlbumsPageProps) {
-  const supabase = await createClient();
-
-  const { data: authData, error: authError } =
-    await supabase.auth.getClaims();
-
-  if (authError || !authData?.claims) {
-    redirect("/admin/login");
-  }
+  const { supabase } = await requireAdmin();
 
   const { data, error } = await supabase
     .from("albums")

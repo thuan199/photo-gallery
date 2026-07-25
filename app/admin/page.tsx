@@ -2,15 +2,10 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import ThemeToggle from "@/app/components/ThemeToggle";
+import { requireAdmin } from "@/lib/auth/admin";
 
 export default async function AdminPage() {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase.auth.getClaims();
-
-  if (error || !data?.claims) {
-    redirect("/admin/login");
-  }
+  const { supabase } = await requireAdmin();
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-pink-50 text-neutral-900 transition-colors dark:from-neutral-950 dark:via-black dark:to-neutral-950 dark:text-white">

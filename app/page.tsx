@@ -53,7 +53,7 @@ export default async function Home() {
             href="/"
             className="bg-gradient-to-r from-sky-500 to-pink-500 bg-clip-text text-xl font-bold tracking-[0.2em] text-transparent dark:from-sky-300 dark:to-pink-300"
           >
-            Vui thôi mà (fake)
+            Nhìn lại mình đi
           </Link>
 
           <div className="flex items-center gap-5">
@@ -71,13 +71,6 @@ export default async function Home() {
               >
                 Album
               </a>
-
-              <Link
-                href="/admin"
-                className="rounded-full border border-black/10 bg-white/70 px-5 py-2 shadow-sm transition hover:border-sky-300 hover:bg-sky-50 dark:border-white/20 dark:bg-white/5 dark:hover:bg-white dark:hover:text-black"
-              >
-                Quản trị
-              </Link>
             </nav>
 
             <ThemeToggle />

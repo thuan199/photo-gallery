@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAlbum } from "../actions";
+import { requireAdmin } from "@/lib/auth/admin";
 
 type NewAlbumPageProps = {
   searchParams: Promise<{
@@ -30,13 +31,7 @@ function getErrorMessage(error?: string) {
 export default async function NewAlbumPage({
   searchParams,
 }: NewAlbumPageProps) {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase.auth.getClaims();
-
-  if (error || !data?.claims) {
-    redirect("/admin/login");
-  }
+  const { supabase } = await requireAdmin();
 
   const params = await searchParams;
   const errorMessage = getErrorMessage(params.error);

@@ -3,16 +3,10 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { requireAdmin } from "@/lib/auth/admin";
 
 export async function createPhoto(formData: FormData) {
-  const supabase = await createClient();
-
-  const { data: authData, error: authError } =
-    await supabase.auth.getClaims();
-
-  if (authError || !authData?.claims) {
-    redirect("/admin/login");
-  }
+  const { supabase } = await requireAdmin();
 
   const albumId = String(formData.get("album_id") ?? "");
   const title = String(formData.get("title") ?? "").trim();
@@ -69,14 +63,7 @@ export async function createPhoto(formData: FormData) {
 }
 
 export async function deletePhoto(formData: FormData) {
-  const supabase = await createClient();
-
-  const { data: authData, error: authError } =
-    await supabase.auth.getClaims();
-
-  if (authError || !authData?.claims) {
-    redirect("/admin/login");
-  }
+  const { supabase } = await requireAdmin();
 
   const photoId = String(formData.get("photo_id") ?? "");
   const albumId = String(formData.get("album_id") ?? "");
@@ -105,14 +92,7 @@ export async function deletePhoto(formData: FormData) {
 }
 
 export async function updatePhoto(formData: FormData) {
-  const supabase = await createClient();
-
-  const { data: authData, error: authError } =
-    await supabase.auth.getClaims();
-
-  if (authError || !authData?.claims) {
-    redirect("/admin/login");
-  }
+  const { supabase } = await requireAdmin();
 
   const albumId = String(formData.get("album_id") ?? "");
   const photoId = String(formData.get("photo_id") ?? "");

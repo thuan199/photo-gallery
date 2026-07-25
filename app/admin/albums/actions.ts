@@ -3,6 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { requireAdmin } from "@/lib/auth/admin";
+
 
 function createSlug(value: string) {
   return value
@@ -18,15 +20,7 @@ function createSlug(value: string) {
 }
 
 export async function createAlbum(formData: FormData) {
-  const supabase = await createClient();
-
-  // Luôn kiểm tra đăng nhập ngay trong Server Action.
-  const { data: authData, error: authError } =
-    await supabase.auth.getClaims();
-
-  if (authError || !authData?.claims) {
-    redirect("/admin/login");
-  }
+  const { supabase } = await requireAdmin();
 
   const title = String(formData.get("title") ?? "").trim();
   const customSlug = String(formData.get("slug") ?? "").trim();
@@ -80,14 +74,7 @@ export async function createAlbum(formData: FormData) {
 }
 
 export async function updateAlbum(formData: FormData) {
-  const supabase = await createClient();
-
-  const { data: authData, error: authError } =
-    await supabase.auth.getClaims();
-
-  if (authError || !authData?.claims) {
-    redirect("/admin/login");
-  }
+  const { supabase } = await requireAdmin();
 
   const id = String(formData.get("id") ?? "");
   const title = String(formData.get("title") ?? "").trim();
@@ -151,15 +138,7 @@ export async function updateAlbum(formData: FormData) {
 }
 
 export async function deleteAlbum(formData: FormData) {
-  const supabase = await createClient();
-
-  const { data: authData, error: authError } =
-    await supabase.auth.getClaims();
-
-  if (authError || !authData?.claims) {
-    redirect("/admin/login");
-  }
-
+  const { supabase } = await requireAdmin();
   const id = String(formData.get("id") ?? "");
 
   if (!id) {
