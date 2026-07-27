@@ -71,6 +71,13 @@ export default async function Home() {
               >
                 Album
               </a>
+
+              <Link
+                href="/contact"
+                className="transition hover:text-sky-500 dark:hover:text-white"
+              >
+                Liên hệ
+              </Link>
             </nav>
 
             <ThemeToggle />
