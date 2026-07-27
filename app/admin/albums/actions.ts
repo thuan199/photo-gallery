@@ -161,3 +161,13 @@ export async function deleteAlbum(formData: FormData) {
 
   redirect("/admin/albums?deleted=true");
 }
+export async function updateAlbumOrder(orderedIds: string[]) {
+  const { supabase } = await requireAdmin();
+  for (let index = 0; index < orderedIds.length; index += 1) {
+    const { error } = await supabase.from("albums").update({ sort_order: index }).eq("id", orderedIds[index]);
+    if (error) throw new Error(error.message);
+  }
+  revalidatePath("/");
+  revalidatePath("/admin/albums");
+  return { ok: true };
+}

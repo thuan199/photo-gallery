@@ -1,11 +1,9 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
 import ThemeToggle from "@/app/components/ThemeToggle";
 import { requireAdmin } from "@/lib/auth/admin";
 
 export default async function AdminPage() {
-  const { supabase } = await requireAdmin();
+  await requireAdmin();
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-pink-50 text-neutral-900 transition-colors dark:from-neutral-950 dark:via-black dark:to-neutral-950 dark:text-white">
@@ -16,9 +14,7 @@ export default async function AdminPage() {
               Moments Admin
             </p>
 
-            <h1 className="mt-1 text-xl font-bold">
-              Trang quản trị
-            </h1>
+            <h1 className="mt-1 text-xl font-bold">Trang quản trị</h1>
           </div>
 
           <div className="flex items-center gap-3">
@@ -48,15 +44,15 @@ export default async function AdminPage() {
               </p>
 
               <h2 className="mt-4 max-w-3xl text-4xl font-bold leading-tight sm:text-5xl">
-                Quản lý album và hình ảnh
+                Quản lý nội dung website
                 <span className="block bg-gradient-to-r from-sky-500 to-pink-500 bg-clip-text text-transparent">
                   nhanh chóng và trực quan
                 </span>
               </h2>
 
               <p className="mt-5 max-w-2xl text-base leading-7 text-neutral-600 dark:text-white/60">
-                Bạn đã đăng nhập thành công. Chọn một khu vực bên dưới
-                để bắt đầu quản lý nội dung website.
+                Bạn đã đăng nhập thành công. Chọn một khu vực bên dưới để
+                quản lý album, hình ảnh và bình luận của khách truy cập.
               </p>
             </div>
 
@@ -77,9 +73,7 @@ export default async function AdminPage() {
                 Quản lý nội dung
               </p>
 
-              <h2 className="mt-2 text-2xl font-bold">
-                Chọn chức năng
-              </h2>
+              <h2 className="mt-2 text-2xl font-bold">Chọn chức năng</h2>
             </div>
           </div>
 
@@ -102,9 +96,7 @@ export default async function AdminPage() {
                 Album
               </p>
 
-              <h3 className="mt-2 text-2xl font-bold">
-                Quản lý album
-              </h3>
+              <h3 className="mt-2 text-2xl font-bold">Quản lý album</h3>
 
               <p className="mt-3 leading-6 text-neutral-600 dark:text-white/55">
                 Tạo mới, chỉnh sửa, sắp xếp và xóa các album ảnh.
@@ -138,14 +130,17 @@ export default async function AdminPage() {
               </p>
             </Link>
 
-            <article className="relative overflow-hidden rounded-[1.75rem] border border-violet-100 bg-white p-7 opacity-80 shadow-[0_20px_50px_rgba(139,92,246,0.08)] dark:border-white/10 dark:bg-neutral-900 dark:shadow-none">
+            <Link
+              href="/admin/comments"
+              className="group relative overflow-hidden rounded-[1.75rem] border border-violet-100 bg-white p-7 shadow-[0_20px_50px_rgba(139,92,246,0.10)] transition duration-300 hover:-translate-y-2 hover:border-violet-300 hover:shadow-[0_30px_70px_rgba(139,92,246,0.18)] dark:border-white/10 dark:bg-neutral-900 dark:shadow-none dark:hover:border-violet-400/50"
+            >
               <div className="flex items-start justify-between">
                 <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-100 text-2xl dark:bg-violet-500/15">
                   💬
                 </div>
 
-                <span className="rounded-full bg-violet-100 px-3 py-1 text-xs font-semibold text-violet-700 dark:bg-violet-500/15 dark:text-violet-300">
-                  Sắp có
+                <span className="text-2xl text-neutral-400 transition group-hover:translate-x-1 group-hover:-translate-y-1 dark:text-white/40">
+                  ↗
                 </span>
               </div>
 
@@ -154,13 +149,14 @@ export default async function AdminPage() {
               </p>
 
               <h3 className="mt-2 text-2xl font-bold">
-                Chờ duyệt
+                Quản lý bình luận
               </h3>
 
               <p className="mt-3 leading-6 text-neutral-600 dark:text-white/55">
-                Quản lý và phê duyệt bình luận của khách truy cập.
+                Duyệt, từ chối, xóa bình luận và xem lượt cảm xúc của
+                khách truy cập.
               </p>
-            </article>
+            </Link>
           </div>
         </section>
 
@@ -175,7 +171,8 @@ export default async function AdminPage() {
             </p>
 
             <p className="mt-2 text-sm leading-6 text-neutral-600 dark:text-white/50">
-              Ảnh ngang tỷ lệ khoảng 16:9 sẽ hiển thị đẹp hơn trên trang chủ.
+              Ảnh ngang tỷ lệ khoảng 16:9 sẽ hiển thị đẹp hơn trên trang
+              chủ.
             </p>
           </div>
 
@@ -189,21 +186,23 @@ export default async function AdminPage() {
             </p>
 
             <p className="mt-2 text-sm leading-6 text-neutral-600 dark:text-white/50">
-              Điều chỉnh trường thứ tự để hình ảnh xuất hiện đúng mong muốn.
+              Điều chỉnh trường thứ tự để hình ảnh xuất hiện đúng mong
+              muốn.
             </p>
           </div>
 
           <div className="rounded-[1.5rem] border border-black/5 bg-white/80 p-6 shadow-sm dark:border-white/10 dark:bg-white/5">
             <p className="text-sm text-neutral-500 dark:text-white/40">
-              Xuất bản
+              Kiểm duyệt
             </p>
 
             <p className="mt-2 text-lg font-semibold">
-              Kiểm tra trước khi công khai
+              Kiểm tra bình luận trước khi hiển thị
             </p>
 
             <p className="mt-2 text-sm leading-6 text-neutral-600 dark:text-white/50">
-              Chỉ những album và ảnh đã bật xuất bản mới xuất hiện ngoài website.
+              Chỉ các bình luận đã được duyệt mới xuất hiện công khai
+              bên dưới album.
             </p>
           </div>
         </section>

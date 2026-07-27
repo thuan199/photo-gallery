@@ -52,7 +52,25 @@ export default async function EditPhotoPage({
     .eq("album_id", albumId)
     .single();
 
-  if (error || !photo) {
+  if (error) {
+    console.error("SUPABASE PHOTO ERROR:", {
+      message: error.message,
+      code: error.code,
+      details: error.details,
+      hint: error.hint,
+      albumId,
+      photoId,
+    });
+
+    throw new Error(`Lỗi lấy thông tin ảnh: ${error.message}`);
+  }
+
+  if (!photo) {
+    console.error("Không tìm thấy ảnh:", {
+      albumId,
+      photoId,
+    });
+
     notFound();
   }
 
