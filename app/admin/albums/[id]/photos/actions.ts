@@ -131,26 +131,6 @@ export async function updatePhotoOrder(albumId: string, orderedIds: string[]) {
   return { ok: true };
 }
 
-export async function setAlbumCover(albumId: string, photoId: string) {
-  const { supabase } = await requireAdmin();
-  const { data: photo, error: photoError } = await supabase.from("photos").select("image_url, thumbnail_url").eq("id", photoId).eq("album_id", albumId).single();
-  if (photoError || !photo) throw new Error(photoError?.message ?? "Không tìm thấy ảnh");
-  const { error } = await supabase.from("albums").update({ cover_url: photo.thumbnail_url || photo.image_url }).eq("id", albumId);
-  if (error) throw new Error(error.message);
-  refreshAlbum(albumId);
-  return { ok: true };
-}
-
-export async function deletePhoto(formData: FormData) {
-  const { supabase } = await requireAdmin();
-  const photoId = String(formData.get("photo_id") ?? "");
-  const albumId = String(formData.get("album_id") ?? "");
-  const { error } = await supabase.from("photos").delete().eq("id", photoId).eq("album_id", albumId);
-  if (error) redirect(`/admin/albums/${albumId}/photos?error=${encodeURIComponent(error.message)}`);
-  refreshAlbum(albumId);
-  redirect(`/admin/albums/${albumId}/photos?deleted=true`);
-}
-
 export async function updatePhoto(formData: FormData) {
   const { supabase } = await requireAdmin();
   const albumId = String(formData.get("album_id") ?? "");
@@ -170,4 +150,47 @@ export async function updatePhoto(formData: FormData) {
   if (error) redirect(`/admin/albums/${albumId}/photos/${photoId}/edit?error=${encodeURIComponent(error.message)}`);
   refreshAlbum(albumId);
   redirect(`/admin/albums/${albumId}/photos?updated=true`);
+}
+
+export async function deletePhoto(formData: FormData) {
+  const albumId = String(formData.get("album_id"));
+  const photoId = String(formData.get("photo_id"));
+
+  const { supabase } = await requireAdmin();
+
+  const { error } = await supabase
+    .from("photos")
+    .delete()
+    .eq("id", photoId)
+    .eq("album_id", albumId);
+
+  if (error) {
+    redirect(`/admin/albums/${albumId}/photos?error=delete`);
+  }
+
+  revalidatePath(`/admin/albums/${albumId}/photos`);
+  redirect(`/admin/albums/${albumId}/photos?success=deleted`);
+}
+
+export async function setAlbumCover(formData: FormData) {
+  const albumId = String(formData.get("album_id"));
+  const photoId = String(formData.get("photo_id"));
+  const imageUrl = String(formData.get("image_url"));
+
+  const { supabase } = await requireAdmin();
+
+  const { error } = await supabase
+    .from("albums")
+    .update({
+      cover_url: imageUrl,
+    })
+    .eq("id", albumId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  revalidatePath(`/admin/albums/${albumId}/photos`);
+  revalidatePath("/admin/albums");
+  revalidatePath("/");
 }
