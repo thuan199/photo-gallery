@@ -79,8 +79,8 @@ export default async function Home() {
 
           <div className="max-w-4xl">
 
-            <h1 className="font-serif text-[clamp(3.8rem,9vw,8.5rem)] font-normal leading-[0.88] tracking-[-0.035em]">
-              Nhìn lại những ngày đã qua
+            <h1 className="font-serif text-[clamp(3.8rem,9vw,8.5rem)] font-normal leading-[1.25] tracking-[-0.035em]">
+              Một đống hình, một đống chuyện
               <br />
               
             </h1>
@@ -88,15 +88,15 @@ export default async function Home() {
             <div className="mt-8 flex flex-col gap-7 border-t border-white/35 pt-6 sm:flex-row sm:items-end sm:justify-between">
 
               <p className="max-w-md text-sm leading-7 text-white/80 sm:text-base">
-                Những nơi đã đi qua, những người đã gặp
-                và những khoảnh khắc bình thường nhưng đáng nhớ.
+                Cũng may là lương 10tr thôi.
+                Chứ cỡ em mà lương 100tr, em đi chơi có mời thầy cúng em cũng không về.
               </p>
 
               <a
                 href="#albums"
                 className="group flex w-fit items-center gap-4 text-xs uppercase tracking-[0.25em]"
               >
-                Xem album
+                Xem album nè
 
                 <span className="flex h-11 w-11 items-center justify-center rounded-full border border-white/50 transition duration-300 group-hover:bg-white group-hover:text-black">
                   ↓
@@ -123,14 +123,12 @@ export default async function Home() {
 
           <div>
             <h2 className="max-w-4xl font-serif text-4xl font-normal leading-[1.15] tracking-[-0.02em] sm:text-5xl lg:text-6xl">
-              Một góc nhỏ để lưu lại những điều
-              mà thời gian có thể làm mình quên mất.
+              Thấy đẹp thì chụp. Mà Huỳnh Mai đẹp thật :D
             </h2>
 
             <p className="mt-8 max-w-2xl text-[15px] leading-8 text-[#716b61]">
               Ở đây có ảnh cá nhân, những chuyến đi,
-              những con đường miền quê và cả những khoảnh khắc
-              rất đời thường.
+              những khoảnh khắc rất bình thường.
             </p>
           </div>
 
@@ -160,7 +158,7 @@ export default async function Home() {
             </div>
 
             <p className="max-w-sm text-sm leading-7 text-[#716b61]">
-              Một vài câu chuyện được kể lại bằng hình ảnh.
+              Có hình làm bằng chứng, khỏi cãi.
               Chọn một album để xem trọn bộ.
             </p>
 
@@ -272,12 +270,11 @@ export default async function Home() {
         <div className="mx-auto max-w-5xl text-center">
 
           <p className="mb-7 text-xs uppercase tracking-[0.45em] text-white/45">
-            Memories
+           
           </p>
 
-          <blockquote className="font-serif text-4xl font-normal leading-[1.2] tracking-[-0.02em] sm:text-5xl lg:text-6xl">
-            “Có những khoảnh khắc chỉ xảy ra một lần,
-            nhưng một bức ảnh có thể giữ chúng lại rất lâu.”
+          <blockquote className="font-serif text-4xl font-normal leading-[1.5] tracking-[-0.04em] sm:text-5xl lg:text-5xl">
+            “Ảnh thì mập mờ, còn mình thì mập thật.”
           </blockquote>
 
         </div>
