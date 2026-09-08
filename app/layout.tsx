@@ -25,14 +25,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi" suppressHydrationWarning>
-      <body
-        className={`${playfair.variable} antialiased`}
-      >
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
+    <html
+  lang="vi"
+  suppressHydrationWarning
+  data-scroll-behavior="smooth"
+>
+  <body
+    suppressHydrationWarning
+    className={`${playfair.variable} antialiased`}
+  >
+    <ThemeProvider>
+      {children}
+    </ThemeProvider>
+  </body>
+</html>
   );
 }

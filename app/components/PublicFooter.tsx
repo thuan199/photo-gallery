@@ -102,7 +102,7 @@ export default function PublicFooter({
           </p>
          
           <p>
-            Moments worth remembering.
+            Chụp hơi nhiều, bỏ thì tiếc. 😄
           </p>
         </div>
       </div>

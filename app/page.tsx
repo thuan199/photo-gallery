@@ -88,8 +88,8 @@ export default async function Home() {
             <div className="mt-8 flex flex-col gap-7 border-t border-white/35 pt-6 sm:flex-row sm:items-end sm:justify-between">
 
               <p className="max-w-md text-sm leading-7 text-white/80 sm:text-base">
-                Cũng may là lương 10tr thôi.
-                Chứ cỡ em mà lương 100tr, em đi chơi có mời thầy cúng em cũng không về.
+                Cũng may là anh lương 10tr thôi.
+                Chứ cỡ anh mà lương 100tr, anh đi chơi có mời thầy cúng anh cũng không về.
               </p>
 
               <a
@@ -127,8 +127,7 @@ export default async function Home() {
             </h2>
 
             <p className="mt-8 max-w-2xl text-[15px] leading-8 text-[#716b61]">
-              Ở đây có ảnh cá nhân, những chuyến đi,
-              những khoảnh khắc rất bình thường.
+              Đi đâu chụp đó, thấy gì vui thì lưu lại, còn đẹp hay không tính sau.
             </p>
           </div>
 
@@ -158,7 +157,7 @@ export default async function Home() {
             </div>
 
             <p className="max-w-sm text-sm leading-7 text-[#716b61]">
-              Có hình làm bằng chứng, khỏi cãi.
+              Có hình làm bằng chứng, khỏi cãi.<br />
               Chọn một album để xem trọn bộ.
             </p>
 
