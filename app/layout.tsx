@@ -1,14 +1,8 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Playfair_Display } from "next/font/google";
 
 import "./globals.css";
 import ThemeProvider from "./components/ThemeProvider";
-
-const inter = Inter({
-  subsets: ["latin", "vietnamese"],
-  variable: "--font-inter",
-  display: "swap",
-});
 
 const playfair = Playfair_Display({
   subsets: ["latin", "vietnamese"],
@@ -33,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="vi" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${playfair.variable} antialiased`}
+        className={`${playfair.variable} antialiased`}
       >
         <ThemeProvider>
           {children}
