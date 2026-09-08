@@ -42,7 +42,7 @@ export default function PublicFooter({
                   : "text-[#9a8f7d]"
               }`}
             >
-              Personal Photo Journal
+              Places, People & Moments
             </p>
           </div>
 
@@ -98,9 +98,9 @@ export default function PublicFooter({
           }`}
         >
           <p>
-            © 2026 Phạm Ngọc Thuần
+            © 2026 Phạm Ngọc Thuần · Trần Thị Huỳnh Mai
           </p>
-
+         
           <p>
             Moments worth remembering.
           </p>

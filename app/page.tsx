@@ -79,14 +79,10 @@ export default async function Home() {
 
           <div className="max-w-4xl">
 
-            <p className="mb-5 text-xs uppercase tracking-[0.45em] text-white/75">
-              Personal Photo Journal
-            </p>
-
             <h1 className="font-serif text-[clamp(3.8rem,9vw,8.5rem)] font-normal leading-[0.88] tracking-[-0.035em]">
-              Những khoảnh khắc
+              Nhìn lại những ngày đã qua
               <br />
-              mình muốn nhớ
+              
             </h1>
 
             <div className="mt-8 flex flex-col gap-7 border-t border-white/35 pt-6 sm:flex-row sm:items-end sm:justify-between">
@@ -121,7 +117,7 @@ export default async function Home() {
 
           <div>
             <p className="text-xs uppercase tracking-[0.4em] text-[#9a8f7d]">
-              About this place
+             
             </p>
           </div>
 
@@ -155,7 +151,7 @@ export default async function Home() {
 
             <div>
               <p className="text-xs uppercase tracking-[0.4em] text-[#9a8f7d]">
-                Collections
+                
               </p>
 
               <h2 className="mt-4 font-serif text-5xl font-normal tracking-[-0.025em] sm:text-6xl">
