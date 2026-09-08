@@ -6,6 +6,8 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import CommentSection from "./comments/CommentSection";
 import PhotoLightbox from "./PhotoLightbox";
+import PublicHeader from "@/app/components/PublicHeader";
+import PublicFooter from "@/app/components/PublicFooter";
 
 type AlbumPageProps = {
   params: Promise<{
@@ -69,7 +71,10 @@ export default async function AlbumPage({
 
   const { count: photoCount } = await supabase
     .from("photos")
-    .select("id", { count: "exact", head: true })
+    .select("id", {
+      count: "exact",
+      head: true,
+    })
     .eq("album_id", album.id)
     .eq("is_published", true);
 
@@ -136,86 +141,157 @@ export default async function AlbumPage({
     cookieStore.get("comment_visitor_id")?.value ?? null;
 
   return (
-    <main className="min-h-screen bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-white">
-      <section className="relative overflow-hidden border-b border-black/10 dark:border-white/10">
-        {coverImage && (
-          <div className="absolute inset-0">
+    <main className="min-h-screen bg-[#f7f5f0] text-[#292722]">
+
+      {/* HEADER */}
+      <PublicHeader />
+
+
+      {/* HERO COVER */}
+      <section className="px-4 pt-[92px] sm:px-6 lg:px-10">
+
+        <div className="relative mx-auto min-h-[68svh] max-w-[1600px] overflow-hidden bg-[#d8d2c7] sm:min-h-[74svh]">
+
+          {coverImage ? (
             <img
               src={coverImage}
-              alt=""
-              aria-hidden="true"
-              className="h-full w-full scale-105 object-cover blur-sm"
+              alt={album.title}
+              className="absolute inset-0 h-full w-full object-cover"
             />
+          ) : (
+            <div className="absolute inset-0 bg-[#d8d2c7]" />
+          )}
 
-            <div className="absolute inset-0 bg-white/75 dark:bg-black/75" />
+          {/* overlay */}
+          <div className="absolute inset-0 bg-black/15" />
 
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/30 to-neutral-50 dark:via-black/30 dark:to-neutral-950" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/5 to-transparent" />
+
+
+          {/* BACK BUTTON */}
+          <div className="absolute left-5 top-5 z-10 sm:left-8 sm:top-8">
+
+            <Link
+              href="/#albums"
+              className="group inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.22em] text-white"
+            >
+              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/50 transition group-hover:bg-white group-hover:text-black">
+                ←
+              </span>
+
+              <span className="hidden sm:inline">
+                Quay lại
+              </span>
+            </Link>
+
           </div>
-        )}
 
-        <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-16 lg:px-8">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/70 px-4 py-2 text-sm font-medium text-neutral-700 backdrop-blur transition hover:bg-white dark:border-white/10 dark:bg-black/40 dark:text-neutral-300 dark:hover:bg-black/60"
-          >
-            <span aria-hidden="true">←</span>
-            Quay lại trang chủ
-          </Link>
 
-          <div className="mt-10 max-w-3xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500 dark:text-neutral-400">
-              Album ảnh
+          {/* ALBUM TITLE */}
+          <div className="absolute inset-x-0 bottom-0 z-10 px-6 pb-8 text-white sm:px-10 sm:pb-12 lg:px-14 lg:pb-14">
+
+            <p className="mb-4 text-[10px] uppercase tracking-[0.45em] text-white/70 sm:text-xs">
+              Photo Collection
             </p>
 
-            <h1 className="mt-4 text-4xl font-bold tracking-tight text-neutral-950 dark:text-white sm:text-5xl lg:text-6xl">
+            <h1 className="max-w-5xl font-serif text-[clamp(3rem,8vw,7rem)] font-normal leading-[0.9] tracking-[-0.035em]">
               {album.title}
             </h1>
 
-            {album.description && (
-              <p className="mt-6 max-w-2xl text-base leading-8 text-neutral-600 dark:text-neutral-300 sm:text-lg">
-                {album.description}
-              </p>
-            )}
+          </div>
 
-            <div className="mt-7 flex flex-wrap items-center gap-3">
-              <span className="rounded-full border border-black/10 bg-white/70 px-4 py-2 text-sm text-neutral-600 backdrop-blur dark:border-white/10 dark:bg-black/40 dark:text-neutral-300">
-                {photoCount ?? photos.length} ảnh
-              </span>
+        </div>
+
+      </section>
+
+
+      {/* ALBUM INTRO */}
+      <section className="mx-auto max-w-[1440px] px-6 py-16 lg:px-10 lg:py-24">
+
+        <div className="grid gap-10 border-b border-black/10 pb-16 lg:grid-cols-[0.7fr_1.5fr] lg:pb-24">
+
+          {/* LEFT */}
+          <div>
+
+            <p className="text-[10px] uppercase tracking-[0.4em] text-[#9a8f7d]">
+              Collection
+            </p>
+
+            <div className="mt-6 flex flex-col gap-2 text-sm text-[#716b61]">
+
+              <p>
+                {photoCount ?? photos.length} hình ảnh
+              </p>
 
               <a
                 href="#comments"
-                className="rounded-full border border-black/10 bg-white/70 px-4 py-2 text-sm text-neutral-600 backdrop-blur transition hover:bg-white dark:border-white/10 dark:bg-black/40 dark:text-neutral-300 dark:hover:bg-black/60"
+                className="w-fit border-b border-transparent transition hover:border-[#716b61]"
               >
                 {comments.length} bình luận
               </a>
+
             </div>
+
           </div>
+
+
+          {/* RIGHT */}
+          <div>
+
+            {album.description ? (
+              <p className="max-w-4xl font-serif text-3xl font-normal leading-[1.35] tracking-[-0.015em] sm:text-4xl lg:text-5xl">
+                {album.description}
+              </p>
+            ) : (
+              <p className="max-w-4xl font-serif text-3xl font-normal leading-[1.35] text-[#716b61] sm:text-4xl lg:text-5xl">
+                Một vài khoảnh khắc được lưu lại trong album này.
+              </p>
+            )}
+
+          </div>
+
         </div>
+
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
-        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+
+      {/* PHOTO COLLECTION */}
+      <section className="mx-auto max-w-[1440px] px-4 pb-24 sm:px-6 lg:px-10 lg:pb-36">
+
+        <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-neutral-500 dark:text-neutral-400">
-              Bộ sưu tập
+
+            <p className="text-[10px] uppercase tracking-[0.4em] text-[#9a8f7d]">
+              Gallery
             </p>
 
-            <h2 className="mt-2 text-2xl font-bold text-neutral-900 dark:text-white sm:text-3xl">
-              Hình ảnh trong album
+            <h2 className="mt-3 font-serif text-4xl font-normal tracking-[-0.025em] sm:text-5xl">
+              Những khoảnh khắc
             </h2>
+
           </div>
 
-          <p className="text-sm text-neutral-500 dark:text-neutral-400">
+          <p className="text-xs uppercase tracking-[0.18em] text-[#9a8f7d]">
             Nhấn vào ảnh để xem toàn màn hình
           </p>
+
         </div>
 
-        <PhotoLightbox initialPhotos={photos} albumId={album.id} total={photoCount ?? photos.length} />
+
+        <PhotoLightbox
+          initialPhotos={photos}
+          albumId={album.id}
+          total={photoCount ?? photos.length}
+        />
+
       </section>
 
-      <div
+
+      {/* COMMENTS */}
+      <section
         id="comments"
-        className="scroll-mt-24 border-t border-black/10 dark:border-white/10"
+        className="scroll-mt-20 border-t border-black/10 bg-[#f1eee7]"
       >
         <CommentSection
           albumId={album.id}
@@ -225,7 +301,12 @@ export default async function AlbumPage({
           commentError={commentError}
           visitorId={visitorId}
         />
-      </div>
+      </section>
+
+
+      {/* FOOTER */}
+      <PublicFooter variant="dark" />
+
     </main>
   );
 }

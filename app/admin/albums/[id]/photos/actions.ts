@@ -153,8 +153,19 @@ export async function updatePhoto(formData: FormData) {
 }
 
 export async function deletePhoto(formData: FormData) {
-  const albumId = String(formData.get("album_id"));
-  const photoId = String(formData.get("photo_id"));
+  const albumId = String(
+    formData.get("album_id") ?? ""
+  ).trim();
+
+  const photoId = String(
+    formData.get("photo_id") ?? ""
+  ).trim();
+
+  if (!albumId || !photoId) {
+    throw new Error(
+      "Thiếu thông tin album hoặc ảnh cần xóa."
+    );
+  }
 
   const { supabase } = await requireAdmin();
 
@@ -165,11 +176,16 @@ export async function deletePhoto(formData: FormData) {
     .eq("album_id", albumId);
 
   if (error) {
-    redirect(`/admin/albums/${albumId}/photos?error=delete`);
+    throw new Error(
+      `Không thể xóa ảnh: ${error.message}`
+    );
   }
 
-  revalidatePath(`/admin/albums/${albumId}/photos`);
-  redirect(`/admin/albums/${albumId}/photos?success=deleted`);
+  refreshAlbum(albumId);
+
+  return {
+    ok: true,
+  };
 }
 
 export async function setAlbumCover(formData: FormData) {

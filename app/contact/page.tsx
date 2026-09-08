@@ -1,6 +1,6 @@
-import Link from "next/link";
-import ThemeToggle from "@/app/components/ThemeToggle";
 import { submitContact } from "./actions";
+import PublicHeader from "@/app/components/PublicHeader";
+import PublicFooter from "@/app/components/PublicFooter";
 
 type ContactPageProps = {
   searchParams: Promise<{
@@ -21,7 +21,9 @@ function getErrorMessage(error?: string) {
       return "Nội dung liên hệ phải có ít nhất 10 ký tự.";
 
     default:
-      return error ? decodeURIComponent(error) : null;
+      return error
+        ? decodeURIComponent(error)
+        : null;
   }
 }
 
@@ -30,216 +32,401 @@ export default async function ContactPage({
 }: ContactPageProps) {
   const params = await searchParams;
 
-  const isSuccess = params.success === "1";
-  const errorMessage = getErrorMessage(params.error);
+  const isSuccess =
+    params.success === "1";
+
+  const errorMessage =
+    getErrorMessage(params.error);
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-sky-50 via-white to-pink-50 text-neutral-900 dark:from-neutral-950 dark:via-black dark:to-neutral-950 dark:text-white">
-      <div className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-sky-200/60 blur-3xl dark:bg-sky-500/10" />
+    <main className="min-h-screen bg-[#f7f5f0] text-[#292722]">
 
-      <div className="pointer-events-none absolute -bottom-32 -right-20 h-96 w-96 rounded-full bg-pink-200/60 blur-3xl dark:bg-pink-500/10" />
+      {/* HEADER */}
+      <PublicHeader active="contact" />
 
-      <header className="relative z-20 border-b border-black/5 bg-white/70 backdrop-blur-xl dark:border-white/10 dark:bg-black/40">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
-          <Link
-            href="/"
-            className="bg-gradient-to-r from-sky-500 to-pink-500 bg-clip-text text-xl font-bold tracking-[0.2em] text-transparent"
-          >
-            Nhìn lại mình đi
-          </Link>
 
-          <div className="flex items-center gap-3">
-            <Link
-              href="/"
-              className="hidden rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-medium text-neutral-700 shadow-sm transition hover:bg-sky-50 sm:inline-flex dark:border-white/10 dark:bg-white/5 dark:text-white"
-            >
-              ← Trang chủ
-            </Link>
+      {/* PAGE INTRO */}
+      <section className="mx-auto max-w-[1440px] px-6 pb-20 pt-36 lg:px-10 lg:pb-28 lg:pt-44">
 
-            <ThemeToggle />
+        <div className="grid gap-12 lg:grid-cols-[0.7fr_1.5fr]">
+
+          {/* LEFT */}
+          <div>
+
+            <p className="text-[10px] uppercase tracking-[0.45em] text-[#9a8f7d]">
+              Contact
+            </p>
+
           </div>
+
+
+          {/* RIGHT */}
+          <div>
+
+            <h1 className="max-w-5xl font-serif text-[clamp(3.8rem,8vw,7.5rem)] font-normal leading-[0.92] tracking-[-0.04em]">
+              Gửi mình
+              <br />
+              một lời nhắn.
+            </h1>
+
+            <p className="mt-8 max-w-2xl text-[15px] leading-8 text-[#716b61] sm:text-base">
+              Nếu bạn muốn góp ý về website,
+              hỏi về một album, một bức ảnh hoặc
+              đơn giản là muốn để lại vài dòng,
+              bạn có thể gửi cho mình ở đây.
+            </p>
+
+          </div>
+
         </div>
-      </header>
 
-      <div className="relative z-10 mx-auto grid max-w-7xl gap-10 px-6 py-14 lg:grid-cols-[minmax(0,1fr)_520px] lg:items-center lg:py-20">
-        <section>
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-sky-600 dark:text-sky-300">
-            Liên hệ
-          </p>
+      </section>
 
-          <h1 className="mt-4 max-w-3xl text-5xl font-bold leading-tight sm:text-6xl">
-            Hãy gửi một lời nhắn
-            <span className="block bg-gradient-to-r from-sky-500 to-pink-500 bg-clip-text text-transparent">
-              cho mình nhé.
-            </span>
-          </h1>
 
-          <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-600 dark:text-white/50">
-            Bạn có thể gửi góp ý, câu hỏi hoặc lời nhắn liên quan đến
-            các album và hình ảnh trên website.
-          </p>
+      {/* CONTACT CONTENT */}
+      <section className="mx-auto max-w-[1440px] px-6 pb-28 lg:px-10 lg:pb-40">
 
-          <div className="mt-10 grid max-w-xl gap-4 sm:grid-cols-2">
-            <div className="rounded-3xl border border-black/5 bg-white/70 p-6 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-white/5">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-2xl dark:bg-sky-500/15">
-                ✉️
+        <div className="border-t border-black/10 pt-12 lg:pt-16">
+
+          <div className="grid gap-16 lg:grid-cols-[0.7fr_1.5fr]">
+
+            {/* LEFT INFORMATION */}
+            <aside>
+
+              <p className="text-[10px] uppercase tracking-[0.4em] text-[#9a8f7d]">
+                A little note
+              </p>
+
+              <div className="mt-8 max-w-sm">
+
+                <h2 className="font-serif text-3xl leading-[1.2]">
+                  Mình luôn vui khi nhận được
+                  những lời nhắn từ người ghé xem.
+                </h2>
+
+                <p className="mt-6 text-sm leading-7 text-[#716b61]">
+                  Nội dung gửi từ biểu mẫu sẽ được
+                  lưu riêng trong khu vực quản trị
+                  của website.
+                </p>
+
               </div>
 
-              <h2 className="mt-4 font-semibold">
-                Gửi lời nhắn
-              </h2>
 
-              <p className="mt-2 text-sm leading-6 text-neutral-500 dark:text-white/40">
-                Nội dung của bạn sẽ được lưu riêng trong khu vực quản trị.
-              </p>
-            </div>
+              {/* PRIVACY */}
+              <div className="mt-14 border-t border-black/10 pt-7">
 
-            <div className="rounded-3xl border border-black/5 bg-white/70 p-6 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-white/5">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-pink-100 text-2xl dark:bg-pink-500/15">
-                🔒
+                <p className="text-[10px] uppercase tracking-[0.3em] text-[#9a8f7d]">
+                  Privacy
+                </p>
+
+                <p className="mt-4 max-w-xs text-sm leading-7 text-[#716b61]">
+                  Email của bạn chỉ được dùng để
+                  mình có thể phản hồi khi cần và
+                  sẽ không hiển thị công khai trên
+                  website.
+                </p>
+
               </div>
 
-              <h2 className="mt-4 font-semibold">
-                Thông tin riêng tư
-              </h2>
+            </aside>
 
-              <p className="mt-2 text-sm leading-6 text-neutral-500 dark:text-white/40">
-                Email của bạn không được hiển thị công khai trên website.
-              </p>
+
+            {/* FORM */}
+            <div className="max-w-4xl">
+
+              <div className="mb-12">
+
+                <p className="text-[10px] uppercase tracking-[0.4em] text-[#9a8f7d]">
+                  Send a message
+                </p>
+
+                <h2 className="mt-4 font-serif text-4xl font-normal tracking-[-0.025em] sm:text-5xl">
+                  Bạn muốn nói gì?
+                </h2>
+
+              </div>
+
+
+              {/* SUCCESS */}
+              {isSuccess && (
+                <div className="mb-12 border-l-2 border-[#6e8065] pl-5">
+
+                  <p className="font-serif text-xl text-[#56634f]">
+                    Đã gửi liên hệ thành công.
+                  </p>
+
+                  <p className="mt-2 text-sm leading-7 text-[#6d7867]">
+                    Cảm ơn bạn. Mình sẽ xem nội dung
+                    trong thời gian sớm nhất.
+                  </p>
+
+                </div>
+              )}
+
+
+              {/* ERROR */}
+              {errorMessage && (
+                <div className="mb-12 border-l-2 border-[#a85f56] pl-5">
+
+                  <p className="font-serif text-xl text-[#8b4e47]">
+                    Không thể gửi liên hệ.
+                  </p>
+
+                  <p className="mt-2 text-sm leading-7 text-[#8b4e47]">
+                    {errorMessage}
+                  </p>
+
+                </div>
+              )}
+
+
+              <form action={submitContact}>
+
+                {/* NAME + EMAIL */}
+                <div className="grid gap-10 sm:grid-cols-2">
+
+                  {/* NAME */}
+                  <div>
+
+                    <label
+                      htmlFor="name"
+                      className="block text-[10px] uppercase tracking-[0.28em] text-[#716b61]"
+                    >
+                      Họ tên *
+                    </label>
+
+                    <input
+                      id="name"
+                      name="name"
+                      type="text"
+                      required
+                      minLength={2}
+                      maxLength={100}
+                      autoComplete="name"
+                      placeholder="Tên của bạn"
+                      className="
+                        mt-3
+                        w-full
+                        border-0
+                        border-b
+                        border-black/20
+                        bg-transparent
+                        px-0
+                        py-4
+                        text-[15px]
+                        text-[#292722]
+                        outline-none
+                        transition
+                        placeholder:text-[#aaa397]
+                        focus:border-[#292722]
+                      "
+                    />
+
+                  </div>
+
+
+                  {/* EMAIL */}
+                  <div>
+
+                    <label
+                      htmlFor="email"
+                      className="block text-[10px] uppercase tracking-[0.28em] text-[#716b61]"
+                    >
+                      Email *
+                    </label>
+
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      required
+                      maxLength={200}
+                      autoComplete="email"
+                      placeholder="email@example.com"
+                      className="
+                        mt-3
+                        w-full
+                        border-0
+                        border-b
+                        border-black/20
+                        bg-transparent
+                        px-0
+                        py-4
+                        text-[15px]
+                        text-[#292722]
+                        outline-none
+                        transition
+                        placeholder:text-[#aaa397]
+                        focus:border-[#292722]
+                      "
+                    />
+
+                  </div>
+
+                </div>
+
+
+                {/* SUBJECT */}
+                <div className="mt-10">
+
+                  <label
+                    htmlFor="subject"
+                    className="block text-[10px] uppercase tracking-[0.28em] text-[#716b61]"
+                  >
+                    Tiêu đề
+                  </label>
+
+                  <input
+                    id="subject"
+                    name="subject"
+                    type="text"
+                    maxLength={200}
+                    placeholder="Bạn muốn trao đổi về điều gì?"
+                    className="
+                      mt-3
+                      w-full
+                      border-0
+                      border-b
+                      border-black/20
+                      bg-transparent
+                      px-0
+                      py-4
+                      text-[15px]
+                      text-[#292722]
+                      outline-none
+                      transition
+                      placeholder:text-[#aaa397]
+                      focus:border-[#292722]
+                    "
+                  />
+
+                </div>
+
+
+                {/* MESSAGE */}
+                <div className="mt-10">
+
+                  <label
+                    htmlFor="message"
+                    className="block text-[10px] uppercase tracking-[0.28em] text-[#716b61]"
+                  >
+                    Nội dung *
+                  </label>
+
+                  <textarea
+                    id="message"
+                    name="message"
+                    required
+                    minLength={10}
+                    maxLength={3000}
+                    rows={7}
+                    placeholder="Viết lời nhắn của bạn..."
+                    className="
+                      mt-3
+                      w-full
+                      resize-y
+                      border-0
+                      border-b
+                      border-black/20
+                      bg-transparent
+                      px-0
+                      py-4
+                      text-[15px]
+                      leading-8
+                      text-[#292722]
+                      outline-none
+                      transition
+                      placeholder:text-[#aaa397]
+                      focus:border-[#292722]
+                    "
+                  />
+
+                  <p className="mt-3 text-[11px] leading-6 text-[#9a8f7d]">
+                    Nội dung tối thiểu 10 ký tự.
+                  </p>
+
+                </div>
+
+
+                {/* SUBMIT */}
+                <div className="mt-12 flex justify-end">
+
+                  <button
+                    type="submit"
+                    className="
+                      group
+                      inline-flex
+                      items-center
+                      gap-5
+                      text-[11px]
+                      uppercase
+                      tracking-[0.25em]
+                      text-[#292722]
+                    "
+                  >
+
+                    <span className="border-b border-[#292722] pb-1">
+                      Gửi liên hệ
+                    </span>
+
+                    <span
+                      className="
+                        flex
+                        h-12
+                        w-12
+                        items-center
+                        justify-center
+                        rounded-full
+                        border
+                        border-[#292722]
+                        text-lg
+                        transition
+                        duration-300
+                        group-hover:bg-[#292722]
+                        group-hover:text-[#f7f5f0]
+                      "
+                    >
+                      ↗
+                    </span>
+
+                  </button>
+
+                </div>
+
+              </form>
+
             </div>
+
           </div>
-        </section>
 
-        <section>
-          <form
-            action={submitContact}
-            className="rounded-[2rem] border border-black/5 bg-white/85 p-7 shadow-[0_30px_100px_rgba(14,165,233,0.13)] backdrop-blur-2xl dark:border-white/10 dark:bg-neutral-900/85 dark:shadow-none sm:p-8"
-          >
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.25em] text-pink-600 dark:text-pink-300">
-                Biểu mẫu liên hệ
-              </p>
+        </div>
 
-              <h2 className="mt-2 text-3xl font-bold">
-                Gửi thông tin
-              </h2>
+      </section>
 
-              <p className="mt-3 text-sm leading-6 text-neutral-500 dark:text-white/40">
-                Các trường có dấu * là bắt buộc.
-              </p>
-            </div>
 
-            {isSuccess && (
-              <div className="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-800 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300">
-                <p className="font-semibold">
-                  Đã gửi liên hệ thành công
-                </p>
+      {/* BOTTOM QUOTE */}
+      <section className="bg-[#292722] px-6 py-24 text-[#f7f5f0] lg:py-32">
 
-                <p className="mt-1 text-sm opacity-80">
-                  Cảm ơn bạn. Mình sẽ xem nội dung trong thời gian sớm nhất.
-                </p>
-              </div>
-            )}
+        <div className="mx-auto max-w-5xl text-center">
 
-            {errorMessage && (
-              <div className="mt-6 rounded-2xl border border-red-200 bg-red-50 p-4 text-red-800 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-300">
-                <p className="font-semibold">
-                  Không thể gửi liên hệ
-                </p>
+          <p className="text-[10px] uppercase tracking-[0.45em] text-white/40">
+            Thank you for visiting
+          </p>
 
-                <p className="mt-1 text-sm opacity-80">
-                  {errorMessage}
-                </p>
-              </div>
-            )}
+          <p className="mx-auto mt-7 max-w-4xl font-serif text-4xl leading-[1.25] sm:text-5xl">
+            Cảm ơn vì đã dành một chút thời gian
+            để ghé qua những ký ức của mình.
+          </p>
 
-            <div className="mt-7">
-              <label
-                htmlFor="name"
-                className="block text-sm font-semibold text-neutral-700 dark:text-white/75"
-              >
-                Họ tên <span className="text-red-500">*</span>
-              </label>
+        </div>
 
-              <input
-                id="name"
-                name="name"
-                type="text"
-                required
-                minLength={2}
-                maxLength={100}
-                placeholder="Nhập họ tên"
-                className="mt-2 w-full rounded-xl border border-black/10 bg-white px-4 py-3.5 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100 dark:border-white/10 dark:bg-white/5 dark:text-white dark:focus:ring-sky-500/10"
-              />
-            </div>
+      </section>
 
-            <div className="mt-5">
-              <label
-                htmlFor="email"
-                className="block text-sm font-semibold text-neutral-700 dark:text-white/75"
-              >
-                Email <span className="text-red-500">*</span>
-              </label>
 
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                maxLength={200}
-                placeholder="name@example.com"
-                className="mt-2 w-full rounded-xl border border-black/10 bg-white px-4 py-3.5 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100 dark:border-white/10 dark:bg-white/5 dark:text-white dark:focus:ring-sky-500/10"
-              />
-            </div>
+      {/* FOOTER */}
+      <PublicFooter />
 
-            <div className="mt-5">
-              <label
-                htmlFor="subject"
-                className="block text-sm font-semibold text-neutral-700 dark:text-white/75"
-              >
-                Tiêu đề
-              </label>
-
-              <input
-                id="subject"
-                name="subject"
-                type="text"
-                maxLength={200}
-                placeholder="Chủ đề liên hệ"
-                className="mt-2 w-full rounded-xl border border-black/10 bg-white px-4 py-3.5 outline-none transition focus:border-pink-400 focus:ring-4 focus:ring-pink-100 dark:border-white/10 dark:bg-white/5 dark:text-white dark:focus:ring-pink-500/10"
-              />
-            </div>
-
-            <div className="mt-5">
-              <label
-                htmlFor="message"
-                className="block text-sm font-semibold text-neutral-700 dark:text-white/75"
-              >
-                Nội dung <span className="text-red-500">*</span>
-              </label>
-
-              <textarea
-                id="message"
-                name="message"
-                required
-                minLength={10}
-                maxLength={3000}
-                rows={6}
-                placeholder="Nhập nội dung bạn muốn gửi..."
-                className="mt-2 w-full resize-y rounded-xl border border-black/10 bg-white px-4 py-3.5 outline-none transition focus:border-pink-400 focus:ring-4 focus:ring-pink-100 dark:border-white/10 dark:bg-white/5 dark:text-white dark:focus:ring-pink-500/10"
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-neutral-900 px-5 py-3.5 font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-neutral-700 dark:bg-white dark:text-black dark:hover:bg-white/85"
-            >
-              <span aria-hidden="true">✉</span>
-              Gửi liên hệ
-            </button>
-          </form>
-        </section>
-      </div>
     </main>
   );
 }

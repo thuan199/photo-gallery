@@ -1,6 +1,7 @@
 import Link from "next/link";
+import PublicHeader from "./components/PublicHeader";
+import PublicFooter from "./components/PublicFooter";
 import { createClient } from "@/lib/supabase/server";
-import ThemeToggle from "./components/ThemeToggle";
 
 type Album = {
   id: string;
@@ -28,13 +29,17 @@ export default async function Home() {
 
   if (error) {
     return (
-      <main className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-rose-50 text-neutral-900 transition-colors duration-300 dark:from-black dark:via-neutral-950 dark:to-black dark:text-white">
-        <div className="text-center">
-          <h1 className="text-2xl font-semibold">
+      <main className="flex min-h-screen items-center justify-center bg-[#f7f5f0] px-6 text-[#292722]">
+        <div className="max-w-lg text-center">
+          <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#9a8f7d]">
+            Photo Journal
+          </p>
+
+          <h1 className="font-serif text-4xl">
             Không thể tải album
           </h1>
 
-          <p className="mt-3 text-red-400">
+          <p className="mt-4 text-sm leading-7 text-red-500">
             {error.message}
           </p>
         </div>
@@ -46,46 +51,15 @@ export default async function Home() {
   const featuredAlbum = albumList[0];
 
   return (
-    <main className="min-h-screen bg-black text-white">
-      <header className="fixed left-0 top-0 z-50 w-full border-b border-black/5 bg-white/70 shadow-sm backdrop-blur-xl transition-colors dark:border-white/10 dark:bg-black/40 dark:shadow-none">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
-          <Link
-            href="/"
-            className="bg-gradient-to-r from-sky-500 to-pink-500 bg-clip-text text-xl font-bold tracking-[0.2em] text-transparent dark:from-sky-300 dark:to-pink-300"
-          >
-            Nhìn lại mình đi
-          </Link>
+    <main className="min-h-screen bg-[#f7f5f0] text-[#292722]">
 
-          <div className="flex items-center gap-5">
-            <nav className="hidden items-center gap-7 text-sm text-neutral-600 md:flex dark:text-white/70">
-              <Link
-                href="/"
-                className="transition hover:text-sky-500 dark:hover:text-white"
-              >
-                Trang chủ
-              </Link>
+      {/* HEADER */}
+      <PublicHeader active="home" />
 
-              <a
-                href="#albums"
-                className="transition hover:text-pink-500 dark:hover:text-white"
-              >
-                Album
-              </a>
 
-              <Link
-                href="/contact"
-                className="transition hover:text-sky-500 dark:hover:text-white"
-              >
-                Liên hệ
-              </Link>
-            </nav>
+      {/* HERO */}
+      <section className="relative min-h-[100svh] overflow-hidden">
 
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
-
-      <section className="relative flex min-h-screen items-end overflow-hidden">
         {featuredAlbum?.cover_url ? (
           <img
             src={featuredAlbum.cover_url}
@@ -93,142 +67,231 @@ export default async function Home() {
             className="absolute inset-0 h-full w-full object-cover"
           />
         ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-neutral-800 via-neutral-950 to-black" />
+          <div className="absolute inset-0 bg-[#d8d2c7]" />
         )}
 
-        <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/20 to-transparent dark:from-black dark:via-black/30 dark:to-black/20" />
+        {/* lớp phủ nhẹ */}
+        <div className="absolute inset-0 bg-black/15" />
 
-        <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/10 to-transparent dark:from-black/70 dark:via-transparent dark:to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/10" />
 
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-24 pt-40">
-          <p className="mb-5 text-sm uppercase tracking-[0.4em] text-sky-600 dark:text-white/60">
-            Photography portfolio
-          </p>
+        <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1440px] items-end px-6 pb-16 pt-32 text-white lg:px-10 lg:pb-20">
 
-          <h1 className="max-w-4xl text-5xl font-semibold leading-tight text-neutral-900 sm:text-7xl lg:text-8xl dark:text-white">
-            Lưu giữ những
-            <br />
-            khoảnh khắc đẹp
-          </h1>
+          <div className="max-w-4xl">
 
-          <p className="mt-7 max-w-xl text-base leading-7 text-neutral-600 sm:text-lg dark:text-white/70">
-            Những câu chuyện, con người và cảm xúc được lưu giữ
-            qua từng khung hình.
-          </p>
-
-          <div className="mt-10 flex flex-wrap gap-4">
-            <a
-              href="#albums"
-              className="rounded-full bg-neutral-900 px-7 py-3 font-medium text-white transition hover:bg-neutral-700 dark:bg-white dark:text-black dark:hover:bg-white/80"
-            >
-              Khám phá album
-            </a>
-
-            {featuredAlbum && (
-              <Link
-                href={`/albums/${featuredAlbum.slug}`}
-                className="rounded-full border border-black/15 bg-white/50 px-7 py-3 font-medium text-neutral-900 backdrop-blur-md transition hover:bg-white dark:border-white/30 dark:bg-white/5 dark:text-white dark:hover:bg-white dark:hover:text-black"
-              >
-                Xem album nổi bật
-              </Link>
-            )}
-          </div>
-        </div>
-
-        <div className="absolute bottom-8 right-8 hidden items-center gap-3 text-xs uppercase tracking-[0.3em] text-neutral-500 md:flex dark:text-white/50">
-          <span className="h-px w-12 bg-neutral-400 dark:bg-white/40" />
-          Cuộn xuống
-        </div>
-      </section>
-
-      <section
-        id="albums"
-        className="mx-auto max-w-7xl px-6 py-24"
-      >
-        <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <div>
-            <p className="text-sm uppercase tracking-[0.35em] text-sky-600 dark:text-white/40">
-              Bộ sưu tập
+            <p className="mb-5 text-xs uppercase tracking-[0.45em] text-white/75">
+              Personal Photo Journal
             </p>
 
-            <h2 className="mt-4 text-4xl font-semibold text-neutral-900 sm:text-5xl dark:text-white">
-              Album mới nhất
-            </h2>
-          </div>
+            <h1 className="font-serif text-[clamp(3.8rem,9vw,8.5rem)] font-normal leading-[0.88] tracking-[-0.035em]">
+              Những khoảnh khắc
+              <br />
+              mình muốn nhớ
+            </h1>
 
-          <p className="max-w-md text-sm leading-6 text-neutral-500 dark:text-white/50">
-            Chọn một album để xem toàn bộ hình ảnh và trình chiếu
-            ở chế độ toàn màn hình.
-          </p>
-        </div>
+            <div className="mt-8 flex flex-col gap-7 border-t border-white/35 pt-6 sm:flex-row sm:items-end sm:justify-between">
 
-        {albumList.length === 0 ? (
-          <div className="rounded-3xl border border-dashed border-white/15 py-24 text-center text-white/40">
-            Chưa có album công khai nào.
-          </div>
-        ) : (
-          <div className="grid auto-rows-[260px] gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {albumList.map((album, index) => (
-              <Link
-                key={album.id}
-                href={`/albums/${album.slug}`}
-                className={`group relative overflow-hidden rounded-[2rem] bg-white shadow-[0_20px_60px_rgba(14,165,233,0.12)] ring-1 ring-black/5 transition duration-500 hover:-translate-y-2 hover:shadow-[0_30px_80px_rgba(236,72,153,0.18)] dark:bg-neutral-900 dark:shadow-none dark:ring-white/10 ${index === 0
-                  ? "md:row-span-2"
-                  : index === 3
-                    ? "lg:col-span-2"
-                    : ""
-                  }`}
+              <p className="max-w-md text-sm leading-7 text-white/80 sm:text-base">
+                Những nơi đã đi qua, những người đã gặp
+                và những khoảnh khắc bình thường nhưng đáng nhớ.
+              </p>
+
+              <a
+                href="#albums"
+                className="group flex w-fit items-center gap-4 text-xs uppercase tracking-[0.25em]"
               >
-                {album.cover_url ? (
-                  <img
-                    src={album.cover_url}
-                    alt={album.title}
-                    loading="lazy"
-                    className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-110"
-                  />
-                ) : (
-                  <div className="h-full w-full bg-gradient-to-br from-neutral-700 to-neutral-950" />
-                )}
+                Xem album
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent opacity-80 transition duration-500 group-hover:opacity-100" />
-                <div className="absolute inset-x-0 bottom-0 p-7">
-                  <div className="flex items-end justify-between gap-5">
-                    <div>
-                      <p className="mb-2 text-xs uppercase tracking-[0.3em] text-white/50">
-                        Album {String(index + 1).padStart(2, "0")}
-                      </p>
+                <span className="flex h-11 w-11 items-center justify-center rounded-full border border-white/50 transition duration-300 group-hover:bg-white group-hover:text-black">
+                  ↓
+                </span>
+              </a>
 
-                      <h3 className="text-2xl font-semibold">
-                        {album.title}
-                      </h3>
-
-                      {album.description && (
-                        <p className="mt-3 max-w-md translate-y-3 text-sm leading-6 text-white/60 opacity-0 transition duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                          {album.description}
-                        </p>
-                      )}
-                    </div>
-
-                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/30 bg-white/20 text-xl text-white backdrop-blur-md transition group-hover:rotate-45 group-hover:bg-white group-hover:text-black">
-                      ↗
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            ))}
+            </div>
           </div>
-        )}
+
+        </div>
       </section>
 
-      <footer className="border-t border-black/5 bg-white/50 dark:border-white/10 dark:bg-black">
-        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-5 px-6 py-10 text-sm text-neutral-500 sm:flex-row dark:text-white/40">
-          <p>© 2026 Phạm Ngọc Thuần</p>
 
-          <p className="bg-gradient-to-r from-sky-500 to-pink-500 bg-clip-text font-medium text-transparent">
-            Designed for memories.
-          </p>
+      {/* INTRO */}
+      <section className="mx-auto max-w-[1440px] px-6 py-24 lg:px-10 lg:py-36">
+
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.5fr]">
+
+          <div>
+            <p className="text-xs uppercase tracking-[0.4em] text-[#9a8f7d]">
+              About this place
+            </p>
+          </div>
+
+          <div>
+            <h2 className="max-w-4xl font-serif text-4xl font-normal leading-[1.15] tracking-[-0.02em] sm:text-5xl lg:text-6xl">
+              Một góc nhỏ để lưu lại những điều
+              mà thời gian có thể làm mình quên mất.
+            </h2>
+
+            <p className="mt-8 max-w-2xl text-[15px] leading-8 text-[#716b61]">
+              Ở đây có ảnh cá nhân, những chuyến đi,
+              những con đường miền quê và cả những khoảnh khắc
+              rất đời thường.
+            </p>
+          </div>
+
         </div>
-      </footer>
+      </section>
+
+
+      {/* ALBUMS */}
+      <section
+        id="albums"
+        className="scroll-mt-20 pb-28 lg:pb-40"
+      >
+
+        <div className="mx-auto max-w-[1440px] px-6 lg:px-10">
+
+          {/* TITLE */}
+          <div className="mb-14 flex flex-col justify-between gap-7 border-t border-black/10 pt-8 md:flex-row md:items-end">
+
+            <div>
+              <p className="text-xs uppercase tracking-[0.4em] text-[#9a8f7d]">
+                Collections
+              </p>
+
+              <h2 className="mt-4 font-serif text-5xl font-normal tracking-[-0.025em] sm:text-6xl">
+                Những album
+              </h2>
+            </div>
+
+            <p className="max-w-sm text-sm leading-7 text-[#716b61]">
+              Một vài câu chuyện được kể lại bằng hình ảnh.
+              Chọn một album để xem trọn bộ.
+            </p>
+
+          </div>
+
+
+          {/* EMPTY */}
+          {albumList.length === 0 ? (
+            <div className="border-y border-black/10 py-28 text-center">
+
+              <p className="font-serif text-3xl text-[#716b61]">
+                Chưa có album nào.
+              </p>
+
+            </div>
+          ) : (
+
+            /* ALBUM GRID */
+            <div className="grid gap-x-6 gap-y-14 md:grid-cols-2 lg:gap-x-8 lg:gap-y-20">
+
+              {albumList.map((album, index) => {
+
+                const isLarge =
+                  index % 5 === 0;
+
+                return (
+                  <Link
+                    key={album.id}
+                    href={`/albums/${album.slug}`}
+                    className={`group block ${
+                      isLarge
+                        ? "md:col-span-2"
+                        : ""
+                    }`}
+                  >
+
+                    {/* IMAGE */}
+                    <div
+                      className={`relative overflow-hidden bg-[#ded9d0] ${
+                        isLarge
+                          ? "aspect-[16/8]"
+                          : "aspect-[4/5]"
+                      }`}
+                    >
+
+                      {album.cover_url ? (
+                        <img
+                          src={album.cover_url}
+                          alt={album.title}
+                          loading="lazy"
+                          className="h-full w-full object-cover transition duration-[1200ms] ease-out group-hover:scale-[1.035]"
+                        />
+                      ) : (
+                        <div className="h-full w-full bg-[#d8d2c7]" />
+                      )}
+
+                      <div className="absolute inset-0 bg-black/0 transition duration-500 group-hover:bg-black/[0.08]" />
+
+                      {/* arrow */}
+                      <span className="absolute right-6 top-6 flex h-12 w-12 translate-y-2 items-center justify-center rounded-full bg-[#f7f5f0] text-lg text-[#292722] opacity-0 shadow-sm transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                        ↗
+                      </span>
+
+                    </div>
+
+
+                    {/* INFO */}
+                    <div className="mt-5 flex items-start justify-between gap-6">
+
+                      <div>
+
+                        <p className="mb-2 text-[10px] uppercase tracking-[0.35em] text-[#9a8f7d]">
+                          Collection{" "}
+                          {String(index + 1).padStart(2, "0")}
+                        </p>
+
+                        <h3 className="font-serif text-3xl font-normal tracking-[-0.02em] sm:text-4xl">
+                          {album.title}
+                        </h3>
+
+                        {album.description && (
+                          <p className="mt-3 max-w-xl text-sm leading-7 text-[#716b61]">
+                            {album.description}
+                          </p>
+                        )}
+
+                      </div>
+
+                      <span className="mt-7 hidden text-xs uppercase tracking-[0.2em] text-[#716b61] sm:block">
+                        View
+                      </span>
+
+                    </div>
+
+                  </Link>
+                );
+              })}
+
+            </div>
+          )}
+
+        </div>
+      </section>
+
+
+      {/* QUOTE */}
+      <section className="bg-[#292722] px-6 py-28 text-[#f7f5f0] lg:py-36">
+
+        <div className="mx-auto max-w-5xl text-center">
+
+          <p className="mb-7 text-xs uppercase tracking-[0.45em] text-white/45">
+            Memories
+          </p>
+
+          <blockquote className="font-serif text-4xl font-normal leading-[1.2] tracking-[-0.02em] sm:text-5xl lg:text-6xl">
+            “Có những khoảnh khắc chỉ xảy ra một lần,
+            nhưng một bức ảnh có thể giữ chúng lại rất lâu.”
+          </blockquote>
+
+        </div>
+
+      </section>
+
+
+      {/* FOOTER */}
+      <PublicFooter />
+
     </main>
   );
 }

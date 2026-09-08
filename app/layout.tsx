@@ -1,10 +1,28 @@
 import type { Metadata } from "next";
+import { Inter, Playfair_Display } from "next/font/google";
+
 import "./globals.css";
 import ThemeProvider from "./components/ThemeProvider";
 
+const inter = Inter({
+  subsets: ["latin", "vietnamese"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin", "vietnamese"],
+  variable: "--font-playfair",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Moments Photography",
-  description: "Nơi lưu giữ những khoảnh khắc đáng nhớ",
+  title: {
+    default: "Nhìn lại mình đi",
+    template: "%s | Nhìn lại mình đi",
+  },
+  description:
+    "Những khoảnh khắc, chuyến đi và ký ức được lưu lại qua từng album ảnh.",
 };
 
 export default function RootLayout({
@@ -14,8 +32,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi" suppressHydrationWarning>
-      <body>
-        <ThemeProvider>{children}</ThemeProvider>
+      <body
+        className={`${inter.variable} ${playfair.variable} antialiased`}
+      >
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
